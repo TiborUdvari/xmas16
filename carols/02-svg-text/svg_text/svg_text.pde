@@ -27,7 +27,7 @@ void setup(){
 }
 
 void drawSVG(){
-  pg.background(255);
+  //pg.background(255);
   pg.translate(width/2, height/2);
   
   grp.draw(pg);
