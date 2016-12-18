@@ -6,8 +6,12 @@ Generative Chrismas Carols
 Using a combined corpus of text from the site of écal 
 and french christmas carols generate new texts for christmass cards.
 
+![motor settings](doc/motor-settings.png)
+
 Resources
 ---
 [Single line fonts](http://imajeenyus.com/computer/20150110_single_line_fonts/index.shtml)
 
 [Arduino driver IMPORTANT](http://www.mblock.cc/posts/run-makeblock-ch340-ch341-on-mac-os-sierra)
+
+[inkskape temp closed single line fonts](http://myscrappinginspiration.blogspot.ch/2013/07/how-to-use-temporary-closed-single-line.html)
