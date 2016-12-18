@@ -11,7 +11,7 @@ void setup(){
   smooth(4);
   
   RG.init(this);
-  grp = RG.getText("Hello world!", "FreeSans.ttf", 72, CENTER);
+  grp = RG.getText("Hello world!", "OLFScript3.ttf", 72, CENTER);
 
   pg = createGraphics(width, height, SVG, "test.svg");
   pg.beginDraw();
