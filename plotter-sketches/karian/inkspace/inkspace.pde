@@ -7,13 +7,13 @@
 int ts = 90;
 
 // number of lines to jump
-int offsetY = 5;
+int offsetY = 7;
 
 // maximum offset of the points
 int offsetL = 5;
 
 // blurring level
-int blurring = 150;
+int blurring = 50;
 
 //
 
