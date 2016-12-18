@@ -6,4 +6,6 @@ Generative Chrismas Carols
 Using a combined corpus of text from the site of écal 
 and french christmas carols generate new texts for christmass cards.
 
-
+Resources
+---
+[Single line fonts](http://imajeenyus.com/computer/20150110_single_line_fonts/index.shtml)
