@@ -19,9 +19,10 @@ String fileName;
 
 String[] sentences;
 String allText;
-String fontName = "FreeSans.ttf";
+//String fontName = "FreeSans.ttf";
+String fontName = "OLFScript3.ttf";
 
-GeomText[] items;
+ArrayList<GeomText> items;
 
 void setup(){
   //size(800, 1149);
@@ -38,32 +39,48 @@ void setup(){
 }
 
 void generateText(){
+  RG.setPolygonizer(RG.ADAPTATIVE);
+  
   sentences = rm.generateSentences(2);
   allText = "";
   
   String currentText = "";
+  int maxLetters = 30;
+  items = new ArrayList();
+  float s = width / 20.0;
+  int c = int(s);
+  
   for (String sentence: sentences){
-    allText = allText + sentence + "\n";
+    for (String word: sentence.split(" ")){
+      allText = allText + word + "\n";
     
-    
+      if ( currentText.length() + word.length() + 1 < maxLetters) {
+        currentText += " " + word + " ";
+      } else {
+
+        float offset = items.size() * s;
+        GeomText geomText = new GeomText(currentText, c, 0, -3*c+offset);
+        items.add(geomText);
+        currentText = word;
+      }
+    }
   }
   
-  RG.setPolygonizer(RG.ADAPTATIVE);
+  float offset = items.size() * s;
+  GeomText geomText = new GeomText(currentText, c, 0, -3*c+offset);
+  items.add(geomText);
   
-  int maxLetters = 40;
-  // add to new things until overflow
+  print(items.size());
   
-  for (int i = 0; i < allText.length(); i++){
-    
-  }
-  
+  // todo - create last thing
+  /*
   items = new GeomText[sentences.length];
   for (int i=0; i<sentences.length; i++) {
     int s = width / 25;
     float offset=i*s;
     items[i]= new GeomText(sentences[i], s, 0, -3*s+offset);
   }
-  
+  */
 }
 
 void createPGraphics(){
@@ -87,8 +104,8 @@ void drawSVG(){
   //pg.translate(width/2, height/2);
   
   // 40 
-  for (int i=0; i<items.length; i++) {
-    items[i].display(pg);
+  for (int i=0; i<items.size(); i++) {
+    items.get(i).display(pg);
   }
 }
 
@@ -104,13 +121,12 @@ String svgFileName(){
 void mouseClicked(){
   generateText();
   createPGraphics();
-  
-  for (int i=0; i<items.length; i++) {
-    items[i].display(pg);
-  }
+  /*
+  for (int i=0; i<items.size(); i++) {
+    items.get(i).display(pg);
+  }*/
   
   redraw();
-  
   print(allText);
 }
 
