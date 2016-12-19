@@ -5,6 +5,8 @@ boolean ready;
 PImage img;
 PGraphics g1, g2;
 
+PFont euclid;
+
 import processing.svg.*;
 PGraphics pg;
 
@@ -12,20 +14,17 @@ ArrayList<Float> coordinatesX;
 ArrayList<Float> coordinatesY;
 
 int lineCounter = 0;
-int lineNbr = 150;
+int lineNbr = 220;
 
 void setup() {
   img = loadImage("hello.png");
   size(800, 800);
   initialize();
-}
 
-void initialize() {
-  background(0);
-  lineCounter = 0;
-  coordinatesX = new ArrayList<Float>();
-  coordinatesY = new ArrayList<Float>();
-
+  euclid = createFont("MonoMono_17.otf", 32);
+  textFont(euclid);
+  
+  
   w = img.width;
   h = img.height;
   ready = false;
@@ -36,9 +35,24 @@ void initialize() {
   g1.strokeWeight(0.1);
   g2 = createGraphics(w, h);
   g2.beginDraw();
-  g2.image(img, 0, 0);
-  g2.stroke(0);
-  g2.strokeWeight(0.2);
+  g2.background(255);
+  g2.fill(0);
+  g2.textSize(500);
+  g2.textAlign(CENTER, CENTER);
+  g2.text("N", width/2, height/2);
+  //g2.image(img, 0, 0);
+  g2.stroke(255, 0, 0);
+  //g2.strokeWeight(0.2);
+}
+
+void initialize() {
+
+  background(0);
+  lineCounter = 0;
+  coordinatesX = new ArrayList<Float>();
+  coordinatesY = new ArrayList<Float>();
+
+
   radius = min(w, h)/2;
   angleNew = random(2*PI);
 }
@@ -52,22 +66,22 @@ void draw() {
 
   if (lineCounter < lineNbr) {
     lineCounter++;
-    println(lineCounter);
+    //  println(lineCounter);
     angleOld = angleNew;
     float min, b, angle;
-    
-    int n = 40;
-    
-    if(lineCounter < 50){
+
+    int n = 80;
+
+    if (lineCounter < 80) {
       n = 5;
     }
-    
+
     min = 255;
-    
+
     for (int i=0; i<n; i++) {
       angle = random(2*PI);
       b = chordBrightness(angleOld, angle);
-      println(b);
+      //  println(b);
       if (b<min) {
         min = b;
         angleNew = angle;
@@ -80,10 +94,10 @@ void draw() {
     g2.endDraw();
     image(g1, 0, 0);
   }
-
   if (mousePressed) {
     image(g2, 0, 0);
   }
+
 }
 
 void drawChord(float a1, float a2) {
@@ -151,6 +165,16 @@ void keyPressed() {
     pg.dispose();
     pg.endDraw();
   } else {
+    println(key);
+    g1.clear();
+    g2.clear();
+    g2.beginDraw();
+    g2.background(255);
+    g2.fill(0);
+    g2.textSize(500);
+    g2.textAlign(CENTER, CENTER);
+    g2.text(key, width/2, height/2);
+
     initialize();
   }
 }
