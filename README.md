@@ -6,6 +6,13 @@ Generative Chrismas Carols
 Using a combined corpus of text from the site of écal 
 and french christmas carols generate new texts for christmass cards.
 
+Inkscape convert text to outlines in terminal
+---
+First install inkscape with homebrew. Then execute command
+`
+inkscape untitled.svg --export-text-to-path --export-plain-svg test2.svg
+`
+
 ![motor settings](doc/motor-settings.png)
 
 Resources
