@@ -19,8 +19,8 @@ String fileName;
 
 String[] sentences;
 String allText;
-//String fontName = "FreeSans.ttf";
-String fontName = "OLFScript3.ttf";
+String fontName = "FreeSans.ttf";
+//String fontName = "OLFScript3.ttf";
 
 ArrayList<GeomText> items;
 
@@ -47,7 +47,7 @@ void generateText(){
   String currentText = "";
   int maxLetters = 30;
   items = new ArrayList();
-  float s = width / 20.0;
+  float s = width / 15.0;
   int c = int(s);
   
   for (String sentence: sentences){
