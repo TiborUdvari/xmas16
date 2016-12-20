@@ -14,14 +14,14 @@ ArrayList<Float> coordinatesX;
 ArrayList<Float> coordinatesY;
 
 int lineCounter = 0;
-int lineNbr = 220;
+int lineNbr = 250;
 
 void setup() {
   img = loadImage("hello.png");
   size(800, 800);
   initialize();
 
-  euclid = createFont("MonoMono_17.otf", 32);
+  euclid = createFont("EuclidFlexEcal-Bold.otf", 32);
   textFont(euclid);
   
   
@@ -37,6 +37,7 @@ void setup() {
   g2.beginDraw();
   g2.background(255);
   g2.fill(0);
+  g2.textFont(euclid);
   g2.textSize(500);
   g2.textAlign(CENTER, CENTER);
   g2.text("N", width/2, height/2);
@@ -72,8 +73,8 @@ void draw() {
 
     int n = 80;
 
-    if (lineCounter < 80) {
-      n = 5;
+    if (lineCounter < 50) {
+      n = 1;
     }
 
     min = 255;
