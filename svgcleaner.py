@@ -28,7 +28,13 @@ if __name__ == "__main__":
         #print("iter")
         # Since the d is what defines a duplicate for you
         if 'd' in el.attrib:
-            current = el.get('d')
+            parentMatrix = ""
+            tempEl = el
+            while "transform" in tempEl.getparent().attrib:
+                parentMatrix = parentMatrix + tempEl.getparent().get('transform')
+                tempEl = tempEl.getparent()
+            current = el.get('d') + parentMatrix
+            print(current)
             # In visited already means it's a duplicate, remove it
             if current in visited:
                 el.getparent().remove(el)
