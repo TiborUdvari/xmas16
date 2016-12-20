@@ -40,7 +40,7 @@ void setup() {
   g2.textFont(euclid);
   g2.textSize(500);
   g2.textAlign(CENTER, CENTER);
-  g2.text("N", width/2, height/2);
+  g2.text("N", width/2, height/2 );
   //g2.image(img, 0, 0);
   g2.stroke(255, 0, 0);
   //g2.strokeWeight(0.2);
@@ -174,7 +174,7 @@ void keyPressed() {
     g2.fill(0);
     g2.textSize(500);
     g2.textAlign(CENTER, CENTER);
-    g2.text(key, width/2, height/2);
+    g2.text(key, width/2, height/2 - 15);
 
     initialize();
   }
