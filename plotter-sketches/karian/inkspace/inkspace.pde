@@ -176,10 +176,10 @@ void keyPressed()
     pg.noFill();
 
     // we draw a rect to make the svg same size as the raster
-    pg.rect(0, 0, raster.width, raster.height);
+    //pg.rect(0, 0, raster.width, raster.height);
 
     sampleRaster(pg);
-
+    
     pg.dispose();
     pg.endDraw();
 
@@ -225,6 +225,6 @@ void sampleRaster(PGraphics p)
     // change winding
     winding = !winding;
   }
-
+  
   p.endShape();
 }

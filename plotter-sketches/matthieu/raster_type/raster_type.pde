@@ -17,7 +17,7 @@ int lineCounter = 0;
 int lineNbr = 250;
 
 void setup() {
-  img = loadImage("hello.png");
+  img = loadImage("hello-10.png");
   size(800, 800);
   initialize();
 
@@ -40,8 +40,8 @@ void setup() {
   g2.textFont(euclid);
   g2.textSize(500);
   g2.textAlign(CENTER, CENTER);
-  g2.text("N", width/2, height/2 );
-  //g2.image(img, 0, 0);
+  //g2.text("N", width/2, height/2 );
+  g2.image(img, 0, 0);
   g2.stroke(255, 0, 0);
   //g2.strokeWeight(0.2);
 }
@@ -71,7 +71,7 @@ void draw() {
     angleOld = angleNew;
     float min, b, angle;
 
-    int n = 80;
+    int n = 200;
 
     if (lineCounter < 50) {
       n = 1;
@@ -174,7 +174,7 @@ void keyPressed() {
     g2.fill(0);
     g2.textSize(500);
     g2.textAlign(CENTER, CENTER);
-    g2.text(key, width/2, height/2 - 15);
+    g2.text(key, width/2 - 20, height/2 - 15);
 
     initialize();
   }
