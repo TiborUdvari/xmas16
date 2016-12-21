@@ -1,4 +1,3 @@
-
 import de.looksgood.ani.*;
 import processing.serial.*;
 
@@ -176,7 +175,7 @@ PVector mouseSmooth = new PVector();
 PVector mouseVel = new PVector();
 
 void setup() {
-  size(1200, 400);
+  size(2400, 400);
   //fullScreen();
 
 
@@ -231,7 +230,6 @@ void setup() {
 
 PVector snap = new PVector();
 
-
 void calculSmooth()  {
   PVector diffMouse = new PVector(mouseX, mouseY).sub(mouseSmooth).mult(0.01);
   mouseVel.add(diffMouse);
@@ -270,7 +268,7 @@ void draw() {
   {
     // FIRST RUN ONLY:  Connect here, so that 
 
-    doSerialConnect = false;
+      doSerialConnect = false;
 
     scanSerial();
 
@@ -278,7 +276,7 @@ void draw() {
     {    
       myPort.write("EM,2\r");  //Configure both steppers to 1/8 step mode
 
-      // Configure brush lift servo endpoints and speed
+        // Configure brush lift servo endpoints and speed
       myPort.write("SC,4," + str(ServoPaint) + "\r");  // Brush DOWN position, for painting
       myPort.write("SC,5," + str(ServoUp) + "\r");  // Brush UP position 
 
@@ -385,16 +383,16 @@ void keyPressed()
     }
 
     /*if ( key == 'v') {
-      println("vv");
-      myPort.write("SE,1,1023\r");
-    }
-    if ( key == 'w') {
-      println("ww");
-      myPort.write("SE,0\r");
-    }*/
+     println("vv");
+     myPort.write("SE,1,1023\r");
+     }
+     if ( key == 'w') {
+     println("ww");
+     myPort.write("SE,0\r");
+     }*/
     if ( key == 'h')  // display help
     {
-    gogogo = true;
+      gogogo = true;
     }
 
 
@@ -443,7 +441,8 @@ void drawToDoList()
 
     if (indexDrawn < 0) {
       //offScreen.image(imgBackground, 0, 0);  // Copy original background image into place!
-    }  else {
+    } 
+     else {
       //offScreen.image(imgMain, 0, 0);
     }
 

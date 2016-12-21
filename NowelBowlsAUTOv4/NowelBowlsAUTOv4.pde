@@ -1,4 +1,3 @@
-
 import de.looksgood.ani.*;
 import processing.serial.*;
 
@@ -178,6 +177,7 @@ PVector mouseVel = new PVector();
 void setup() {
   size(1200, 400);
   //fullScreen();
+  // ----- repeat (one line)
 
 
   Ani.init(this); // Initialize animation library
@@ -187,7 +187,7 @@ void setup() {
   firstPath = true;
   shiftKeyDown = false;
 
-  offScreen = createGraphics(800, 519, JAVA2D);
+  offScreen = createGraphics(2400, 400);
   frameRate(60);  // sets maximum speed only
   MotorMinX = 0;
   MotorMinY = 0;
@@ -231,7 +231,6 @@ void setup() {
 
 PVector snap = new PVector();
 
-
 void calculSmooth()  {
   PVector diffMouse = new PVector(mouseX, mouseY).sub(mouseSmooth).mult(0.01);
   mouseVel.add(diffMouse);
@@ -240,6 +239,7 @@ void calculSmooth()  {
     mouseVel.normalize();
     mouseVel.mult(2);
   }
+  mouseVel.mult(0.9);
   mouseSmooth.add(mouseVel);
   //
   snap.x = mouseSmooth.x;
@@ -248,20 +248,15 @@ void calculSmooth()  {
 
 void draw() {
   //
+  background(0);
+  fill(255);
+  rect(0, 0, width/3, height);
+  fill(0);
+  text(mode, 10, 10);
+  noFill();
   //
   calculSmooth();
   betweenClick();
-  //
-  /*
-      snapY = round(round(mouseY/gridY)*gridY);
-   println(snapY);
-   if(snapY%(gridY*2) == 0) {
-   snapX = round(round(mouseX/gridX)*gridX);
-   } else {
-   snapX = round(round(mouseX/gridX)*gridX)+round(gridX/2);
-   }
-   snapX = round(round(mouseX/gridX)*gridX);
-   */
   //
   drawMoves();
   //drawToDoList();
@@ -270,7 +265,7 @@ void draw() {
   {
     // FIRST RUN ONLY:  Connect here, so that 
 
-    doSerialConnect = false;
+      doSerialConnect = false;
 
     scanSerial();
 
@@ -278,7 +273,7 @@ void draw() {
     {    
       myPort.write("EM,2\r");  //Configure both steppers to 1/8 step mode
 
-      // Configure brush lift servo endpoints and speed
+        // Configure brush lift servo endpoints and speed
       myPort.write("SC,4," + str(ServoPaint) + "\r");  // Brush DOWN position, for painting
       myPort.write("SC,5," + str(ServoUp) + "\r");  // Brush UP position 
 
@@ -294,6 +289,11 @@ void draw() {
       // nothing
     }
   }
+  image(offScreen, width/3, 0, 1200, 200);
+  stroke(0, 255, 255);
+  line(width/3+600, 0, width/3+600, height);
+  line(width/3, 0, width/3, height);
+  noStroke();
 }
 
 
@@ -336,34 +336,13 @@ void keyPressed()
   int ny = 0;
 
   if (key == CODED) {
-
-    // Arrow keys are used for nudging, with or without shift key.
-
-    if (keyCode == UP) 
-    {
-      cy-=10;
-      //MoveCustom(cx, cy);
-      //keyup = true;
+    if(keyCode == UP) {
+      //mode++;
+      mode = (mode+1)%modeQtt;
+      println(mode);
     }
-    if (keyCode == DOWN)
-    { 
-      //keydown = true;
-      cy+=10;
-      //MoveCustom(cx, cy);
-    }
-    if (keyCode == LEFT) {
-      cx-=10;
-      // MoveCustom(cx, cy);
-    }
-    if (keyCode == RIGHT) {
-      cx+=10;
-      //MoveCustom(cx, cy);
-    }
-    if (keyCode == SHIFT) {
-    }
-  } else
-  {
-
+   //
+  } else {
     if ( key == 'b')   // Toggle brush up or brush down with 'b' key
     {
       if (BrushDown)
@@ -371,13 +350,7 @@ void keyPressed()
       else
         lowerBrush();
     }
-
-    if ( key == 'z')  // Zero motor coordinates
-      zero();
-
-    if ( key == ' ')  //Space bar: Pause
-      pause();
-
+  
     if ( key == 'q')  // Move home (0,0)
     {
       raiseBrush();
@@ -385,16 +358,16 @@ void keyPressed()
     }
 
     /*if ( key == 'v') {
-      println("vv");
-      myPort.write("SE,1,1023\r");
-    }
-    if ( key == 'w') {
-      println("ww");
-      myPort.write("SE,0\r");
-    }*/
-    if ( key == 'h')  // display help
+     println("vv");
+     myPort.write("SE,1,1023\r");
+     }
+     if ( key == 'w') {
+     println("ww");
+     myPort.write("SE,0\r");
+     }*/
+    if ( key == ' ')  // display help
     {
-    gogogo = true;
+      gogogo = !gogogo;
     }
 
 
@@ -419,122 +392,5 @@ void keyPressed()
       MotorSpeed = 1750;        
     if ( key == '9')
       MotorSpeed = 2000;
-  }
-}
-
-void drawToDoList()
-{  
-  // Erase all painting on main image background, and draw the existing "ToDo" list
-  // on the off-screen buffer.
-
-  int j = ToDoList.length;
-  int x1, x2, y1, y2;
-  int intTemp = -100;
-
-  color interA;
-  float brightness;
-  color white = color(255, 255, 255);
-
-  if ((indexDrawn + 1) < j)
-  {
-
-    // Ready the offscreen buffer for drawing onto
-    offScreen.beginDraw();
-
-    if (indexDrawn < 0) {
-      //offScreen.image(imgBackground, 0, 0);  // Copy original background image into place!
-    }  else {
-      //offScreen.image(imgMain, 0, 0);
-    }
-
-    offScreen.strokeWeight(10); 
-    offScreen.stroke(color_for_new_ToDo_paths);
-
-    x1 = 0;
-    y1 = 0;
-
-    while ( (indexDrawn + 1) < j) {
-
-      indexDrawn++;  
-      // NOTE:  We increment the "Drawn" count here at the beginning of the loop,
-      //        momentarily indicating (somewhat inaccurately) that the so-numbered
-      //        list element has been drawn-- really, we're in the process of drawing it,
-      //        and everything will be back to accurate once we're outside of the loop.
-
-
-      intTemp = ToDoList[indexDrawn];
-
-      if (intTemp >= 0)
-      {  // Preview a path segment
-
-        x2 = floor(intTemp / 10000);
-        y2 = intTemp - 10000 * x2; 
-
-        if (DrawingPath)
-          if ((x1 + y1) == 0)    // first time through the loop
-          {
-            intTemp = ToDoList[indexDrawn - 1];
-            if (intTemp >= 0)
-            {  // first point on this segment can be taken from history!
-
-              x1 = floor(intTemp / 10000);
-              y1 = intTemp - 10000 * x1;
-            }
-          }
-
-        if (DrawingPath == false) {  // Just starting a new path
-          DrawingPath = true;
-          x1 = x2;
-          y1 = y2;
-        }
-
-        if (color_for_new_ToDo_paths == Water)
-          interA = Water;
-        else {
-          //    interA = lerpColor(color_for_new_ToDo_paths, white, .55);
-
-          if (ColorDistance <  ColorFadeStart)
-            brightness = 0.3;
-          else if (ColorDistance < (ColorFadeStart + ColorFadeDist))
-            brightness = 0.3 + 0.6 * ((ColorDistance - ColorFadeStart) /ColorFadeDist);
-          else
-            brightness = 0.9;
-
-          interA = lerpColor(color_for_new_ToDo_paths, white, brightness);
-        }
-
-        offScreen.stroke(interA);
-        offScreen.line(x1, y1, x2, y2); 
-        ColorDistance += getDistance(x1, y1, x2, y2); 
-
-        x1 = x2;
-        y1 = y2;
-      } else
-      {    // intTemp < 0, so we are doing something else.
-        intTemp = -1 * intTemp;
-        DrawingPath = false;
-
-        if ((intTemp > 9) && (intTemp < 20)) 
-        {  // Change paint color 
-          intTemp -= 10; 
-          color_for_new_ToDo_paths = paintset[intTemp];
-          offScreen.stroke(paintset[intTemp]);
-          //        ColorDistance = 0;
-        } else if (intTemp == 40) 
-        {  // Clean brush
-          offScreen.stroke(paintset[8]); // Water color!
-        } else if (intTemp == 30) 
-        {  
-          lastBrushDown_DrawingPath = false;
-        } else if (intTemp == 31) 
-        {  // Lower brush
-          lastBrushDown_DrawingPath = true;
-        }
-      }
-    }
-
-    offScreen.endDraw();
-
-    imgMain = offScreen.get(0, 0, offScreen.width, offScreen.height);
   }
 }
