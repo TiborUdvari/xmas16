@@ -13,6 +13,12 @@ First install inkscape with homebrew. Then execute command
 inkscape untitled.svg --export-text-to-path --export-plain-svg test2.svg
 `
 
+Using custom python script to clean svgs
+---
+`
+python svgcleaner.py -i out.svg -o res2.xml
+`
+
 ![motor settings](doc/motor-settings.png)
 
 Resources
