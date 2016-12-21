@@ -7,7 +7,7 @@
 int ts = 90;
 
 // number of lines to jump
-int offsetY = 7;
+int offsetY = 3;
 
 // maximum offset of the points
 int offsetL = 5;
@@ -66,8 +66,8 @@ void setup()
 
   //
 
-  font = createFont("ORTE2LTT.TTF", ts);
-  // font = createFont("GothamRnd-Light.otf", ts);
+  //font = createFont("ORTE2LTT.TTF", ts);
+  font = createFont("GothamRnd-Light.otf", ts);
   textFont(font);
 
   raster = createGraphics(800, 300, P2D);
@@ -176,10 +176,10 @@ void keyPressed()
     pg.noFill();
 
     // we draw a rect to make the svg same size as the raster
-    pg.rect(0, 0, raster.width, raster.height);
+    //pg.rect(0, 0, raster.width, raster.height);
 
     sampleRaster(pg);
-
+    
     pg.dispose();
     pg.endDraw();
 
@@ -199,11 +199,11 @@ void sampleRaster(PGraphics p)
   raster.loadPixels();
   for (int y = 0; y < raster.height; y += offsetY) {
 
-    // no need to render a line if 'y' is not on the font
+    // no need to render a line if 'y' is not on the font  //TH = TYPEHEIGHT
     if (y < raster.height/2 - th/2 || y > raster.height/2 + th/2) continue;
 
-    // first point of the line
-    if (!winding) { p.vertex(bl, y); } else { p.vertex(el, y); }
+    // first point of the line //bl beginlin el endline
+    if (!winding) { p.vertex(bl, raster.height/2 /*y*/); } else { p.vertex(el, raster.height/2); }
 
     for (int x = 0; x < raster.width; x++) {
       int px = (!winding) ? x : raster.width-x;
@@ -214,17 +214,23 @@ void sampleRaster(PGraphics p)
 
       // 2D or 3D offset of the vertex depending on the luminance value
       if (b > 0.0) {
-        p.vertex(px, y - map(b, 0, 255, 0, offsetL));
-        // p.vertex(x, y, map(b, 0, 255, 0, offsetL));
+        if(y < raster.height/2){
+          p.vertex(px, /*y - */map(b, 0, 255, raster.height/2, y-offsetL));
+          
+        }else{
+          p.vertex(px, /*y - */map(b, 0, 255, raster.height/2, y+offsetL));
+        }
+        
+         //p.vertex(x, y, map(b, 0, 255, 0, offsetL));
       }
     }
 
     // end point of the line
-    if (!winding) { p.vertex(el, y); } else { p.vertex(bl, y); }
+    if (!winding) { p.vertex(el,raster.height/2); } else { p.vertex(bl, raster.height/2); }
 
     // change winding
     winding = !winding;
   }
-
+  
   p.endShape();
 }
