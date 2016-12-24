@@ -6,11 +6,27 @@ float angleDuring = PI/50+0.001;
 PImage[] barbanime = new PImage[9];
 PImage[] barbappy = new PImage[7];
 boolean roll = false;
-
+int[] remove = {51,29,40,62,10,21,50,51,52,53,54,55,49,56,48,47,57,58,59,60,61,62,63,64,65,67,45,84,85,86,82,81,83,87,88,89,90,75,91,92,93,94,95,96,97,74,98,79,99,78,80,76,77,100} ;
 //
 void setup() {
   fullScreen();
-  r = floor(random(100))+1;
+  boolean needRandom = true;
+  while(needRandom) {
+    r = floor(random(100))+1;
+    r = 53;
+    for(int i=0; i<remove.length; i++) {
+      if(r == remove[i]) {
+        r = floor(random(100))+1;
+        println(r+" not bought !");
+        //break;
+      } else {
+        needRandom = false;
+        break;
+      }
+    }
+  }
+  //
+  //
   for (int i=0; i<barbanime.length; i++)  {
     barbanime[i] = loadImage("barba_"+i+".png");
   }
@@ -43,7 +59,7 @@ void draw() {
   line(-200, 100, 200, 100);
   roulette();
   if(abs(angleCurrent-angleFinal)<1) {
-    image(barbappy[frameCount%barbappy.length], 0, 0);
+    image(barbappy[frameCount%barbappy.length], 550, 0);
   }
 }
 void keyPressed () {
