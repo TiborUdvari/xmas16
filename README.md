@@ -23,6 +23,10 @@ python svgcleaner.py -i out.svg -o res2.xml
 
 Resources
 ---
+[Eggbot Documentation](https://wiki.evilmadscientist.com/The_Original_Egg-Bot_Kit)
+
+[Eggbot software](https://github.com/evil-mad/EggBot/releases/tag/2.7.1)
+
 [Single line fonts](http://imajeenyus.com/computer/20150110_single_line_fonts/index.shtml)
 
 [Arduino driver IMPORTANT](http://www.mblock.cc/posts/run-makeblock-ch340-ch341-on-mac-os-sierra)
